@@ -11,10 +11,14 @@ function readStorage() {
     })
 }
 
-window.onload = async function () {
-    await readStorage();
-    appendFilterBtn();
-}
+const intervalId = window.setInterval(async () => {
+    if (window['js-work-quickfilters']) {
+        window.clearInterval(intervalId);
+        await readStorage();
+        appendFilterBtn();
+    }
+
+}, 500);
 
 const localSetting = {
     switchIsOn: false,

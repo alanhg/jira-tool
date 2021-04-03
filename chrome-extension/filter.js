@@ -31,18 +31,16 @@ const localSetting = {
     }),
 }
 
-function getBtnTextContent() {
-    return `Single Filter(${localSetting.switchStatusString})`;
-}
-
 function appendFilterBtn() {
-    const btn = document.createElement('button');
+    const btn = document.createElement('div');
     btn.id = 'jira-single-filter';
-    btn.textContent = getBtnTextContent();
-    btn.style.cssText = '    position: absolute;\n' +
-        '    top: 90px;\n' +
-        '    left: 310px;\n' +
-        '    z-index: 1;'
+    btn.innerHTML = `
+    Single Filter
+    <label class="switch">
+    <input type="checkbox" ${localSetting.switchIsOn ? 'checked' : ''}>
+    <span class="slider round"></span>
+    </label>
+    `;
     document.body.appendChild(btn);
     btn.addEventListener('click', async function (e) {
             if (localSetting.switchIsOn) {
@@ -52,7 +50,6 @@ function appendFilterBtn() {
                 await localSetting.turnOn();
                 applySingleFilter();
             }
-            btn.textContent = getBtnTextContent();
         },
         {
             capture: true
@@ -68,7 +65,9 @@ function appendFilterBtn() {
 function filterInterceptor(e) {
     if (e.target.dataset.filterId) {
         Array.prototype.forEach.call(filterElements.getElementsByClassName('ghx-active'), function (item) {
-            item.click();
+            if (item !== e.target) {
+                item.click();
+            }
         });
     }
 }

@@ -28,6 +28,9 @@
       ],
       "js": [
         "filter.js"
+      ],
+      "css": [
+        "filter.css"
       ]
     }
   ],

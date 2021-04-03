@@ -24,7 +24,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://*/*"
+        "https://*/secure/RapidBoard.jspa*rapidView=*"
       ],
       "js": [
         "filter.js"

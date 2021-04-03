@@ -5,6 +5,7 @@
     z-index: 1;
     display: flex;
     align-items: center;
+    color: #172b4d;
 }
 
 #jira-single-filter .switch {

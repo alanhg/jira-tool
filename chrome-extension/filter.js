@@ -36,27 +36,28 @@ function getBtnTextContent() {
 }
 
 function appendFilterBtn() {
-    const navs = document.getElementsByClassName('subnav-container');
-    if (navs.length) {
-        const btn = document.createElement('button');
-        btn.id = 'jira-single-filter';
-        btn.textContent = getBtnTextContent();
-        navs[0].appendChild(btn);
-        btn.addEventListener('click', async function (e) {
-                if (localSetting.switchIsOn) {
-                    await localSetting.turnOff();
-                    closeSingleFilter();
-                } else {
-                    await localSetting.turnOn();
-                    applySingleFilter();
-                }
-                btn.textContent = getBtnTextContent();
-            },
-            {
-                capture: true
+    const btn = document.createElement('button');
+    btn.id = 'jira-single-filter';
+    btn.textContent = getBtnTextContent();
+    btn.style.cssText = '    position: absolute;\n' +
+        '    top: 90px;\n' +
+        '    left: 310px;\n' +
+        '    z-index: 1;'
+    document.body.appendChild(btn);
+    btn.addEventListener('click', async function (e) {
+            if (localSetting.switchIsOn) {
+                await localSetting.turnOff();
+                closeSingleFilter();
+            } else {
+                await localSetting.turnOn();
+                applySingleFilter();
             }
-        );
-    }
+            btn.textContent = getBtnTextContent();
+        },
+        {
+            capture: true
+        }
+    );
     filterElements = window['js-work-quickfilters'];
     if (localSetting.switchIsOn) {
         applySingleFilter();
@@ -64,22 +65,19 @@ function appendFilterBtn() {
 }
 
 
-function filterInteceptor(e) {
+function filterInterceptor(e) {
     if (e.target.dataset.filterId) {
-        const href = window.location.href.replace(/(rapidView=\d+)(\s|\S)+$/, (_, g1) => {
-            return `${g1}&quickFilter=${e.target.dataset.filterId}`;
+        Array.prototype.forEach.call(filterElements.getElementsByClassName('ghx-active'), function (item) {
+            item.click();
         });
-        console.log(href);
-        e.stopPropagation();
-        window.location.href = href;
     }
 }
 
 
 function applySingleFilter() {
-    filterElements.addEventListener('click', filterInteceptor, {capture: true})
+    filterElements.addEventListener('click', filterInterceptor, {capture: true})
 }
 
 function closeSingleFilter() {
-    filterElements.removeEventListener('click', filterInteceptor, {capture: true})
+    filterElements.removeEventListener('click', filterInterceptor, {capture: true})
 }

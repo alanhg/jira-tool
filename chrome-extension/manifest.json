@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Jira Tool",
-  "description": "Jira助手,支持Filter单选",
+  "description": "extend quick filter",
   "version": "0.1",
   "browser_action": {
     "default_title": "Jira Tool",
@@ -18,7 +18,7 @@
     "open_in_tab": false
   },
   "permissions": [
-    "tabs",
+    "activeTab",
     "storage"
   ],
   "content_scripts": [

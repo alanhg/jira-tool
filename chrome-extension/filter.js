@@ -11,6 +11,9 @@ function readStorage() {
     })
 }
 
+/**
+ * js-work-quickfilters出现时进行按钮追加
+ */
 const intervalId = window.setInterval(async () => {
     if (window['js-work-quickfilters']) {
         window.clearInterval(intervalId);
@@ -35,6 +38,16 @@ const localSetting = {
     }),
 }
 
+function getLeftElement() {
+    if (window['subnav-trigger-work']) {
+        return window['subnav-trigger-work']
+    }
+    if (window['subnav-title']) {
+        return window['subnav-title'].children[0]
+    }
+    return window['js-work-quickfilters'];
+}
+
 function appendFilterBtn() {
     const btn = document.createElement('div');
     btn.id = 'jira-single-filter';
@@ -45,6 +58,9 @@ function appendFilterBtn() {
     <span class="slider round"></span>
     </label>
     `;
+    const leftEl = getLeftElement();
+    btn.style.left = leftEl.getBoundingClientRect().left + leftEl.offsetWidth + 10 + 'px';
+    btn.style.top = leftEl.getBoundingClientRect().top + 6 + 'px';
     document.body.appendChild(btn);
     btn.addEventListener('click', async function (e) {
             if (localSetting.switchIsOn) {

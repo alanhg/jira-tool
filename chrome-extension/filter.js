@@ -135,7 +135,7 @@ function focusDownElement(element) {
 
 function focusElement(element, offsetPosition) {
     const rect = element.getBoundingClientRect();
-    const x = rect.left;
+    const x = (rect.left + rect.right) / 2;
     const OFFSET = 30;
     const y = offsetPosition === 'up' ? (rect.top - OFFSET) : (rect.bottom + OFFSET);
     const upElement = document.elementFromPoint(x, y);

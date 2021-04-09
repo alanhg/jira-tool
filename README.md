@@ -2,7 +2,7 @@
 
 ![](./chrome-extension/icon.png)
 
-
+> 开启filter单选模式，支持方向键快速切换
 
 ![](./screenshot.gif)
 

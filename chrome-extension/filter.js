@@ -93,6 +93,7 @@ function appendHotkeyListener() {
         const focusElementIndex = Array.prototype.findIndex.call(filterElements, item => item === focusElement);
         const isFirstElement = focusElementIndex === 0;
         const isLastElement = focusElementIndex === (filterElements.length - 1);
+
         if (filterElements.length === 1) {
             return;
         }
@@ -100,6 +101,7 @@ function appendHotkeyListener() {
             if (isFirstElement) {
                 return;
             }
+            focusUpElement(focusElement);
         } else if (e.key === 'ArrowRight') {
             if (isLastElement) {
                 return;
@@ -109,7 +111,7 @@ function appendHotkeyListener() {
             if (isLastElement) {
                 return;
             }
-
+            focusDownElement(focusElement);
         } else if (e.key === 'ArrowLeft') {
             if (isFirstElement) {
                 return;
@@ -117,6 +119,29 @@ function appendHotkeyListener() {
             filterElements[focusElementIndex - 1].focus();
         }
     })
+}
+
+function isUnderFilters(upElement) {
+    return filterEl.contains(upElement);
+}
+
+function focusUpElement(element) {
+    focusElement(element, 'up');
+}
+
+function focusDownElement(element) {
+    focusElement(element, 'down');
+}
+
+function focusElement(element, offsetPosition) {
+    const rect = element.getBoundingClientRect();
+    const x = rect.left;
+    const OFFSET = 30;
+    const y = offsetPosition === 'up' ? (rect.top - OFFSET) : (rect.bottom + OFFSET);
+    const upElement = document.elementFromPoint(x, y);
+    if (upElement && isUnderFilters(upElement)) {
+        upElement.focus();
+    }
 }
 
 

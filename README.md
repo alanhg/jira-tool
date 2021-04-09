@@ -24,6 +24,6 @@ crx pack --zip-output jiraTool.zip
 
 ## Install
 
-1. Chrome webstore `process`
-2. Unpacked Install
+1. [Chrome webstore](https://chrome.google.com/webstore/detail/jira-tool/bifineglhieejpkhnfnfemcbpadpdooi)
+3. Unpacked Install
    ![image](https://user-images.githubusercontent.com/9245110/113583783-a8ea0a00-965c-11eb-95df-cc26cd497e11.png)

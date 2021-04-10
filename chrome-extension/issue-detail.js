@@ -7,7 +7,6 @@ const intervalId = window.setInterval(async () => {
 
 function disableEvent(e) {
     e.preventDefault();
-    return false;
 }
 
 function disableQuickToEdit() {

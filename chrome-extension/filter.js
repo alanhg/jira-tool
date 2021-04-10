@@ -49,6 +49,10 @@ function getLeftElement() {
     return window['js-work-quickfilters'];
 }
 
+/**
+ * @description
+ * 追加单选按钮
+ */
 function appendFilterBtn() {
     const btn = document.createElement('div');
     btn.id = 'jira-single-filter';

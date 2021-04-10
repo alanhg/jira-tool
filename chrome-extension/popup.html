@@ -12,14 +12,27 @@
             width: 300px;
             height: 200px;
         }
+
+        .margin-top {
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
 <main>
-    JIRA <img src="icon.png"/>
+    JIRA <img src="icon.png" alt="logo"/>
     <section>
+        Disable Quick to edit
+        <label class="switch">
+            <input type="checkbox" id="disabledQuickToEdit">
+            <span class="slider round"></span>
+        </label>
+    </section>
+
+    <section class="margin-top">
         Please contact <a href="https://github.com/alanhg/jira-tool" target="_blank">me</a> if you have any issues!
     </section>
 </main>
+<script src="./popup.js"></script>
 </body>
 </html>

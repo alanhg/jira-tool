@@ -5,11 +5,13 @@ const intervalId = window.setInterval(async () => {
     }
 }, 500);
 
+function disableEvent(e) {
+    e.preventDefault();
+    return false;
+}
+
 function disableQuickToEdit() {
     const descriptionEl = window['description-val'];
     descriptionEl.removeAttribute('title');
-    descriptionEl.getElementsByClassName('user-content-block')[0].addEventListener('click', function (e) {
-        e.preventDefault();
-        return false;
-    })
+    descriptionEl.getElementsByClassName('user-content-block')[0].addEventListener('click', disableEvent)
 }

@@ -1,4 +1,4 @@
-#jira-single-filter {
+#j-single-filter {
     position: absolute;
     z-index: 1;
     display: flex;
@@ -6,7 +6,7 @@
     color: #172b4d;
 }
 
-#jira-single-filter .switch {
+.j-switch {
     margin-left: 6px;
     position: relative;
     display: inline-block;
@@ -14,13 +14,13 @@
     height: 17px;
 }
 
-#jira-single-filter .switch input {
+.j-switch input {
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-#jira-single-filter .slider {
+.j-slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -32,7 +32,7 @@
     transition: .4s;
 }
 
-#jira-single-filter .slider:before {
+.j-slider:before {
     position: absolute;
     content: "";
     height: 13px;
@@ -44,24 +44,24 @@
     transition: .4s;
 }
 
-#jira-single-filter input:checked + .slider {
+input:checked + .j-slider {
     background-color: #2196F3;
 }
 
-#jira-single-filter input:focus + .slider {
+input:focus + .j-slider {
     box-shadow: 0 0 1px #2196F3;
 }
 
-#jira-single-filter input:checked + .slider:before {
+input:checked + .j-slider:before {
     -webkit-transform: translateX(13px);
     -ms-transform: translateX(13px);
     transform: translateX(13px);
 }
 
-#jira-single-filter .slider.round {
+.j-slider.round {
     border-radius: 17px;
 }
 
-#jira-single-filter .slider.round:before {
+.j-slider.round:before {
     border-radius: 50%;
 }

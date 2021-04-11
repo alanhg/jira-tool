@@ -49,14 +49,18 @@ function getLeftElement() {
     return window['js-work-quickfilters'];
 }
 
+/**
+ * @description
+ * 追加单选按钮
+ */
 function appendFilterBtn() {
     const btn = document.createElement('div');
-    btn.id = 'jira-single-filter';
+    btn.id = 'j-single-filter';
     btn.innerHTML = `
     Single Filter
-    <label class="switch">
+    <label class="j-switch">
     <input type="checkbox" ${localSetting.switchIsOn ? 'checked' : ''}>
-    <span class="slider round"></span>
+    <span class="j-slider round"></span>
     </label>
     `;
     const leftEl = getLeftElement();

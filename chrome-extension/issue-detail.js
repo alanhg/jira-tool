@@ -14,13 +14,19 @@ async function disableQuickToEdit() {
     if (!await readDisableQuickToEdit()) {
         return;
     }
-    const descriptionEl = window[DESCRIPTION_EL_ID];
-    descriptionEl.removeAttribute('title');
-    descriptionEl.getElementsByClassName('user-content-block')[0].addEventListener('click', disableEvent)
+    toggleDisableEvent(true);
 }
 
-function revertDisableEvent() {
+async function toggleDisableEvent(off) {
+    if (off === undefined) {
+        off = await readDisableQuickToEdit();
+    }
     const descriptionEl = window[DESCRIPTION_EL_ID];
-    descriptionEl.getElementsByClassName('user-content-block')[0].removeEventListener('click', disableEvent)
-    descriptionEl.setAttribute('title', 'Click to edit');
+    if (off) {
+        descriptionEl.getElementsByClassName('user-content-block')[0].removeEventListener('click', disableEvent)
+        descriptionEl.setAttribute('title', 'Click to edit');
+    } else {
+        descriptionEl.removeAttribute('title');
+        descriptionEl.getElementsByClassName('user-content-block')[0].addEventListener('click', disableEvent)
+    }
 }

@@ -8,6 +8,6 @@ readDisableQuickToEdit().then((res) => {
     disabledQuickToEditEl.checked = res;
 })
 
-disabledQuickToEditEl.addEventListener('change', (e) => {
+disabledQuickToEditEl.addEventListener('change', async (e) => {
     setDisableQuickToEdit(e.target.checked);
 })

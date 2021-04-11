@@ -1,3 +1,6 @@
+const extensionVersion = chrome.runtime.getManifest().version;
+document.getElementById('jVersion').innerText = extensionVersion;
+
 const localSetting = {
     disableQuickToEditIsOn: false
 }

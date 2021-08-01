@@ -6,9 +6,9 @@ let filterElements;
  * js-work-quickfilters出现时进行按钮追加
  */
 const intervalId = window.setInterval(async () => {
+    await Promise.all([readSingleFilter(), readAutoSelect(), readDisableQuickToEdit()])
     if (window['js-work-quickfilters']) {
         window.clearInterval(intervalId);
-        await readSingleFilter();
         appendFilterBtn();
         appendHotkeyListener();
     }
@@ -34,7 +34,7 @@ function appendFilterBtn() {
     btn.innerHTML = `
     Single Filter
     <label class="j-switch">
-    <input type="checkbox" ${localSetting.switchIsOn ? 'checked' : ''}>
+    <input type="checkbox" ${localSetting.singleFilter ? 'checked' : ''}>
     <span class="j-slider round"></span>
     </label>
     `;
@@ -43,7 +43,7 @@ function appendFilterBtn() {
     btn.style.top = leftEl.getBoundingClientRect().top + 6 + 'px';
     document.body.appendChild(btn);
     btn.addEventListener('click', async function (e) {
-            if (localSetting.switchIsOn) {
+            if (localSetting.singleFilter) {
                 await turnOffSingleFilter();
                 closeSingleFilter();
             } else {
@@ -56,7 +56,7 @@ function appendFilterBtn() {
         }
     );
     filterEl = window['js-work-quickfilters'];
-    if (localSetting.switchIsOn) {
+    if (localSetting.singleFilter) {
         applySingleFilter();
     }
 }

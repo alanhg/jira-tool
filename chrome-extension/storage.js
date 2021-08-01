@@ -7,7 +7,7 @@ const localSetting = {
     // 自动选中
     autoSelect: true,
     // 单选过滤器开关
-    switchIsOn: false,
+    singleFilter: false,
 }
 
 function readStorage(key) {
@@ -29,7 +29,11 @@ function writeStorage(key, value) {
 }
 
 function readDisableQuickToEdit() {
-    return readStorage(DISABLE_QUICK_TO_EDIT_KEY)
+    return readStorage(DISABLE_QUICK_TO_EDIT_KEY).then(res => {
+        if (res !== undefined) {
+            localSetting.disableQuickToEditIsOn = res;
+        }
+    })
 }
 
 function setDisableQuickToEdit(value) {
@@ -39,7 +43,11 @@ function setDisableQuickToEdit(value) {
 }
 
 function readAutoSelect() {
-    return readStorage(AUTO_SELECT_KEY)
+    return readStorage(AUTO_SELECT_KEY).then(res => {
+        if (res !== undefined) {
+            localSetting.autoSelect = res;
+        }
+    })
 }
 
 function setAutoSelect(value) {
@@ -51,19 +59,19 @@ function setAutoSelect(value) {
 function readSingleFilter() {
     return readStorage(SINGLE_FILTER_SWITCH_KEY).then(res => {
         if (res !== undefined) {
-            localSetting.switchIsOn = res;
+            localSetting.singleFilter = res;
         }
     })
 }
 
 function turnOnSingleFilter() {
     return writeStorage(SINGLE_FILTER_SWITCH_KEY, true).then(res => {
-        localSetting.switchIsOn = res;
+        localSetting.singleFilter = res;
     })
 }
 
 function turnOffSingleFilter() {
     return writeStorage(SINGLE_FILTER_SWITCH_KEY, false).then(res => {
-        localSetting.switchIsOn = res;
+        localSetting.singleFilter = res;
     })
 }

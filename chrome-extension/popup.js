@@ -4,17 +4,11 @@ document.getElementById('jVersion').innerText = extensionVersion;
 const disabledQuickToEditEl = document.getElementById('disabledQuickToEdit');
 const autoSelectToEditEl = document.getElementById('autoSelect');
 
-readDisableQuickToEdit().then((res) => {
-    if (res !== undefined) {
-        localSetting.disableQuickToEditIsOn = res;
-    }
+readDisableQuickToEdit().then(() => {
     disabledQuickToEditEl.checked = localSetting.disableQuickToEditIsOn;
 })
 
 readAutoSelect().then((res) => {
-    if (res !== undefined) {
-        localSetting.autoSelect = res;
-    }
     autoSelectToEditEl.checked = localSetting.autoSelect;
 })
 

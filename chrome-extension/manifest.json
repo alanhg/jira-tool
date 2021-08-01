@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Jira Tool",
   "description": "extend quick filter",
-  "version": "0.3",
+  "version": "0.4",
   "action": {
     "default_title": "Jira Tool",
     "default_icon": "icon.png",
@@ -29,6 +29,7 @@
         "*://*/secure/RapidBoard.jspa*rapidView=*"
       ],
       "js": [
+        "storage.js",
         "filter.js"
       ],
       "css": [

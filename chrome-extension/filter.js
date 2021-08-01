@@ -2,15 +2,6 @@ const SINGLE_FILTER_SWITCH_KEY = 'single_filter_switch';
 let filterEl;
 let filterElements;
 
-function readStorage() {
-    return new Promise(function (resolve) {
-        chrome.storage.local.get([SINGLE_FILTER_SWITCH_KEY], function (result) {
-            localSetting.switchIsOn = result[SINGLE_FILTER_SWITCH_KEY] === 'true';
-            localSetting.switchStatusString = localSetting.switchIsOn ? 'on' : 'off';
-            resolve();
-        });
-    })
-}
 
 /**
  * js-work-quickfilters出现时进行按钮追加
@@ -18,26 +9,11 @@ function readStorage() {
 const intervalId = window.setInterval(async () => {
     if (window['js-work-quickfilters']) {
         window.clearInterval(intervalId);
-        await readStorage();
+        await readSingleFilter();
         appendFilterBtn();
         appendHotkeyListener();
     }
 }, 500);
-
-const localSetting = {
-    switchIsOn: false,
-    switchStatusString: null,
-    turnOn: () => new Promise(function (resolve) {
-        chrome.storage.local.set({[SINGLE_FILTER_SWITCH_KEY]: 'true'}, () => {
-            readStorage().then(resolve);
-        });
-    }),
-    turnOff: () => new Promise(function (resolve) {
-        chrome.storage.local.set({[SINGLE_FILTER_SWITCH_KEY]: 'false'}, () => {
-            readStorage().then(resolve);
-        });
-    }),
-}
 
 function getLeftElement() {
     if (window['subnav-trigger-work']) {
@@ -69,10 +45,10 @@ function appendFilterBtn() {
     document.body.appendChild(btn);
     btn.addEventListener('click', async function (e) {
             if (localSetting.switchIsOn) {
-                await localSetting.turnOff();
+                await turnOffSingleFilter();
                 closeSingleFilter();
             } else {
-                await localSetting.turnOn();
+                await turnOnSingleFilter();
                 applySingleFilter();
             }
         },

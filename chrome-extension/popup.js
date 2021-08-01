@@ -1,11 +1,6 @@
 const extensionVersion = chrome.runtime.getManifest().version;
 document.getElementById('jVersion').innerText = extensionVersion;
 
-const localSetting = {
-    disableQuickToEditIsOn: true,
-    // 自动选中
-    autoSelect: true
-}
 const disabledQuickToEditEl = document.getElementById('disabledQuickToEdit');
 const autoSelectToEditEl = document.getElementById('autoSelect');
 

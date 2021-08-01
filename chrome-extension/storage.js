@@ -1,6 +1,17 @@
 const DISABLE_QUICK_TO_EDIT_KEY = 'DISABLE_QUICKTO_EDIT_SWITCH';
 const AUTO_SELECT_KEY = 'AUTO_SELECT_KEY';
 
+const localSetting = {
+    disableQuickToEditIsOn: true,
+    // 自动选中
+    autoSelect: true,
+    // 单选过滤器开关
+    switchIsOn: false,
+
+    // 单选过滤器开关 on or off
+    switchStatusString: null
+}
+
 function readStorage(key) {
     return new Promise(function (resolve) {
         chrome.storage.local.get([key], function (result) {
@@ -19,18 +30,39 @@ function writeStorage(key, value) {
     })
 }
 
-async function readDisableQuickToEdit() {
-    return (await readStorage(DISABLE_QUICK_TO_EDIT_KEY) === 'true') || localSetting.disableQuickToEditIsOn
+function readDisableQuickToEdit() {
+    return readStorage(DISABLE_QUICK_TO_EDIT_KEY)
 }
 
-async function setDisableQuickToEdit(value) {
-    return await writeStorage(DISABLE_QUICK_TO_EDIT_KEY, String(value))
+function setDisableQuickToEdit(value) {
+    return writeStorage(DISABLE_QUICK_TO_EDIT_KEY, value)
 }
 
-async function readAutoSelect() {
-    return await readStorage(AUTO_SELECT_KEY) === 'true' || localSetting.autoSelect
+function readAutoSelect() {
+    return readStorage(AUTO_SELECT_KEY)
 }
 
-async function setAutoSelect(value) {
-    return await writeStorage(AUTO_SELECT_KEY, String(value))
+function setAutoSelect(value) {
+    return writeStorage(AUTO_SELECT_KEY, value)
+}
+
+function readSingleFilter() {
+    return readStorage(SINGLE_FILTER_SWITCH_KEY).then(res => {
+        localSetting.switchIsOn = res;
+        localSetting.switchStatusString = localSetting.switchIsOn ? 'on' : 'off';
+    })
+}
+
+function turnOnSingleFilter() {
+    return writeStorage(SINGLE_FILTER_SWITCH_KEY, true).then(res => {
+        localSetting.switchIsOn = res;
+        localSetting.switchStatusString = 'on';
+    })
+}
+
+function turnOffSingleFilter() {
+    return writeStorage(SINGLE_FILTER_SWITCH_KEY, false).then(res => {
+        localSetting.switchIsOn = res;
+        localSetting.switchStatusString = 'off';
+    })
 }

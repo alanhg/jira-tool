@@ -14,7 +14,7 @@ const localSetting = {
 
 function readStorage(key) {
     return new Promise(function (resolve) {
-        chrome.storage.local.get([key], function (result) {
+        chrome.storage.sync.get([key], function (result) {
             resolve(result[key]);
         });
     })
@@ -22,7 +22,7 @@ function readStorage(key) {
 
 function writeStorage(key, value) {
     return new Promise(function (resolve) {
-        chrome.storage.local.set({
+        chrome.storage.sync.set({
             [key]: value
         }, function () {
             resolve(value);

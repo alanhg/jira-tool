@@ -1,5 +1,6 @@
 const DISABLE_QUICK_TO_EDIT_KEY = 'DISABLE_QUICKTO_EDIT_SWITCH';
 const AUTO_SELECT_KEY = 'AUTO_SELECT_KEY';
+const SINGLE_FILTER_SWITCH_KEY = 'single_filter_switch';
 
 const localSetting = {
     disableQuickToEditIsOn: true,
@@ -7,9 +8,6 @@ const localSetting = {
     autoSelect: true,
     // 单选过滤器开关
     switchIsOn: false,
-
-    // 单选过滤器开关 on or off
-    switchStatusString: null
 }
 
 function readStorage(key) {
@@ -35,7 +33,9 @@ function readDisableQuickToEdit() {
 }
 
 function setDisableQuickToEdit(value) {
-    return writeStorage(DISABLE_QUICK_TO_EDIT_KEY, value)
+    return writeStorage(DISABLE_QUICK_TO_EDIT_KEY, value).then(() => {
+        localSetting.disableQuickToEditIsOn = value;
+    })
 }
 
 function readAutoSelect() {
@@ -43,26 +43,27 @@ function readAutoSelect() {
 }
 
 function setAutoSelect(value) {
-    return writeStorage(AUTO_SELECT_KEY, value)
+    return writeStorage(AUTO_SELECT_KEY, value).then(() => {
+        localSetting.autoSelect = value;
+    })
 }
 
 function readSingleFilter() {
     return readStorage(SINGLE_FILTER_SWITCH_KEY).then(res => {
-        localSetting.switchIsOn = res;
-        localSetting.switchStatusString = localSetting.switchIsOn ? 'on' : 'off';
+        if (res !== undefined) {
+            localSetting.switchIsOn = res;
+        }
     })
 }
 
 function turnOnSingleFilter() {
     return writeStorage(SINGLE_FILTER_SWITCH_KEY, true).then(res => {
         localSetting.switchIsOn = res;
-        localSetting.switchStatusString = 'on';
     })
 }
 
 function turnOffSingleFilter() {
     return writeStorage(SINGLE_FILTER_SWITCH_KEY, false).then(res => {
         localSetting.switchIsOn = res;
-        localSetting.switchStatusString = 'off';
     })
 }

@@ -1,4 +1,3 @@
-const SINGLE_FILTER_SWITCH_KEY = 'single_filter_switch';
 let filterEl;
 let filterElements;
 

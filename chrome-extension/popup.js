@@ -5,13 +5,17 @@ const disabledQuickToEditEl = document.getElementById('disabledQuickToEdit');
 const autoSelectToEditEl = document.getElementById('autoSelect');
 
 readDisableQuickToEdit().then((res) => {
-    localSetting.disableQuickToEditIsOn = res;
-    disabledQuickToEditEl.checked = res;
+    if (res !== undefined) {
+        localSetting.disableQuickToEditIsOn = res;
+    }
+    disabledQuickToEditEl.checked = localSetting.disableQuickToEditIsOn;
 })
 
 readAutoSelect().then((res) => {
-    localSetting.autoSelect = res;
-    autoSelectToEditEl.checked = res;
+    if (res !== undefined) {
+        localSetting.autoSelect = res;
+    }
+    autoSelectToEditEl.checked = localSetting.autoSelect;
 })
 
 disabledQuickToEditEl.addEventListener('change', async (e) => {

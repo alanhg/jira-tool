@@ -65,3 +65,7 @@ input:checked + .j-slider:before {
 .j-slider.round:before {
     border-radius: 50%;
 }
+
+.j-not-allowed {
+    cursor: not-allowed !important;
+}

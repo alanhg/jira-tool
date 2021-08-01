@@ -38,13 +38,15 @@
     },
     {
       "matches": [
-        "https://*/browse/*-*"
+        "*://*/secure/RapidBoard.jspa*rapidView=*",
+        "*://*/browse/*-*"
       ],
       "js": [
         "storage.js",
         "issue-detail.js"
       ],
       "css": [
+        "filter.css"
       ]
     }
   ]

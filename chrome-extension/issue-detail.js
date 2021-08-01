@@ -11,22 +11,19 @@ function disableEvent(e) {
 }
 
 async function disableQuickToEdit() {
-    if (!await readDisableQuickToEdit()) {
-        return;
-    }
-    toggleDisableEvent(true);
+    await readDisableQuickToEdit();
+    toggleDisableEvent(localSetting.disableQuickToEditIsOn);
 }
 
-async function toggleDisableEvent(off) {
-    if (off === undefined) {
-        off = await readDisableQuickToEdit();
-    }
+async function toggleDisableEvent(disabled) {
     const descriptionEl = window[DESCRIPTION_EL_ID];
-    if (off) {
-        descriptionEl.getElementsByClassName('user-content-block')[0].removeEventListener('click', disableEvent)
-        descriptionEl.setAttribute('title', 'Click to edit');
-    } else {
+    if (disabled) {
         descriptionEl.removeAttribute('title');
+        descriptionEl.classList.add('j-not-allowed');
         descriptionEl.getElementsByClassName('user-content-block')[0].addEventListener('click', disableEvent)
+    } else {
+        descriptionEl.setAttribute('title', 'Click to edit');
+        descriptionEl.classList.remove('j-not-allowed');
+        descriptionEl.getElementsByClassName('user-content-block')[0].removeEventListener('click', disableEvent)
     }
 }

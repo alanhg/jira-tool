@@ -1,43 +1,18 @@
-const SINGLE_FILTER_SWITCH_KEY = 'single_filter_switch';
 let filterEl;
 let filterElements;
 
-function readStorage() {
-    return new Promise(function (resolve) {
-        chrome.storage.local.get([SINGLE_FILTER_SWITCH_KEY], function (result) {
-            localSetting.switchIsOn = result[SINGLE_FILTER_SWITCH_KEY] === 'true';
-            localSetting.switchStatusString = localSetting.switchIsOn ? 'on' : 'off';
-            resolve();
-        });
-    })
-}
 
 /**
  * js-work-quickfilters出现时进行按钮追加
  */
 const intervalId = window.setInterval(async () => {
+    await Promise.all([readSingleFilter(), readAutoSelect(), readDisableQuickToEdit()])
     if (window['js-work-quickfilters']) {
         window.clearInterval(intervalId);
-        await readStorage();
         appendFilterBtn();
         appendHotkeyListener();
     }
 }, 500);
-
-const localSetting = {
-    switchIsOn: false,
-    switchStatusString: null,
-    turnOn: () => new Promise(function (resolve) {
-        chrome.storage.local.set({[SINGLE_FILTER_SWITCH_KEY]: 'true'}, () => {
-            readStorage().then(resolve);
-        });
-    }),
-    turnOff: () => new Promise(function (resolve) {
-        chrome.storage.local.set({[SINGLE_FILTER_SWITCH_KEY]: 'false'}, () => {
-            readStorage().then(resolve);
-        });
-    }),
-}
 
 function getLeftElement() {
     if (window['subnav-trigger-work']) {
@@ -59,7 +34,7 @@ function appendFilterBtn() {
     btn.innerHTML = `
     Single Filter
     <label class="j-switch">
-    <input type="checkbox" ${localSetting.switchIsOn ? 'checked' : ''}>
+    <input type="checkbox" ${localSetting.singleFilter ? 'checked' : ''}>
     <span class="j-slider round"></span>
     </label>
     `;
@@ -68,11 +43,11 @@ function appendFilterBtn() {
     btn.style.top = leftEl.getBoundingClientRect().top + 6 + 'px';
     document.body.appendChild(btn);
     btn.addEventListener('click', async function (e) {
-            if (localSetting.switchIsOn) {
-                await localSetting.turnOff();
+            if (localSetting.singleFilter) {
+                await turnOffSingleFilter();
                 closeSingleFilter();
             } else {
-                await localSetting.turnOn();
+                await turnOnSingleFilter();
                 applySingleFilter();
             }
         },
@@ -81,7 +56,7 @@ function appendFilterBtn() {
         }
     );
     filterEl = window['js-work-quickfilters'];
-    if (localSetting.switchIsOn) {
+    if (localSetting.singleFilter) {
         applySingleFilter();
     }
 }
@@ -97,7 +72,7 @@ function appendHotkeyListener() {
         const focusElementIndex = Array.prototype.findIndex.call(filterElements, item => item === focusElement);
         const isFirstElement = focusElementIndex === 0;
         const isLastElement = focusElementIndex === (filterElements.length - 1);
-
+        let targetElement;
         if (filterElements.length === 1) {
             return;
         }
@@ -105,22 +80,26 @@ function appendHotkeyListener() {
             if (isFirstElement) {
                 return;
             }
-            focusUpElement(focusElement);
+            targetElement = focusUpElement(focusElement);
         } else if (e.key === 'ArrowRight') {
             if (isLastElement) {
                 return;
             }
-            filterElements[focusElementIndex + 1].focus();
+            targetElement = filterElements[focusElementIndex + 1];
         } else if (e.key === 'ArrowDown') {
             if (isLastElement) {
                 return;
             }
-            focusDownElement(focusElement);
+            targetElement = focusDownElement(focusElement);
         } else if (e.key === 'ArrowLeft') {
             if (isFirstElement) {
                 return;
             }
-            filterElements[focusElementIndex - 1].focus();
+            targetElement = filterElements[focusElementIndex - 1];
+        }
+        if (targetElement) {
+            targetElement.focus();
+            localSetting.autoSelect && targetElement.click();
         }
     })
 }
@@ -130,11 +109,11 @@ function isUnderFilters(upElement) {
 }
 
 function focusUpElement(element) {
-    focusElement(element, 'up');
+    return focusElement(element, 'up');
 }
 
 function focusDownElement(element) {
-    focusElement(element, 'down');
+    return focusElement(element, 'down');
 }
 
 function focusElement(element, offsetPosition) {
@@ -144,8 +123,9 @@ function focusElement(element, offsetPosition) {
     const y = offsetPosition === 'up' ? (rect.top - OFFSET) : (rect.bottom + OFFSET);
     const upElement = document.elementFromPoint(x, y);
     if (upElement && isUnderFilters(upElement)) {
-        upElement.focus();
+        return upElement;
     }
+    return element;
 }
 
 

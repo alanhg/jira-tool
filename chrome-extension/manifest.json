@@ -1,9 +1,9 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Jira Tool",
   "description": "extend quick filter",
-  "version": "0.3",
-  "browser_action": {
+  "version": "0.4",
+  "action": {
     "default_title": "Jira Tool",
     "default_icon": "icon.png",
     "default_popup": "popup.html"
@@ -20,12 +20,15 @@
   "permissions": [
     "storage"
   ],
+  "optional_permissions": [
+  ],
   "content_scripts": [
     {
       "matches": [
-        "https://*/secure/RapidBoard.jspa*rapidView=*"
+        "*://*/secure/RapidBoard.jspa*rapidView=*"
       ],
       "js": [
+        "storage.js",
         "filter.js"
       ],
       "css": [
@@ -34,20 +37,16 @@
     },
     {
       "matches": [
-        "https://*/browse/*-*"
+        "*://*/secure/RapidBoard.jspa*rapidView=*",
+        "*://*/browse/*-*"
       ],
       "js": [
         "storage.js",
         "issue-detail.js"
       ],
       "css": [
+        "filter.css"
       ]
     }
-  ],
-  "background": {
-    "scripts": [
-      "background.js"
-    ],
-    "persistent": false
-  }
+  ]
 }

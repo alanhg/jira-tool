@@ -16,9 +16,8 @@
 
 ## Bundle
 
-```
-crx pack -o jiraTool.crx
-crx pack --zip-output jiraTool.zip
+```shell
+shell ./build.sh
 
 ```
 

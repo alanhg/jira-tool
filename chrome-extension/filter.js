@@ -97,7 +97,7 @@ function appendHotkeyListener() {
         const focusElementIndex = Array.prototype.findIndex.call(filterElements, item => item === focusElement);
         const isFirstElement = focusElementIndex === 0;
         const isLastElement = focusElementIndex === (filterElements.length - 1);
-
+        let targetElement;
         if (filterElements.length === 1) {
             return;
         }
@@ -105,22 +105,26 @@ function appendHotkeyListener() {
             if (isFirstElement) {
                 return;
             }
-            focusUpElement(focusElement);
+            targetElement = focusUpElement(focusElement);
         } else if (e.key === 'ArrowRight') {
             if (isLastElement) {
                 return;
             }
-            filterElements[focusElementIndex + 1].focus();
+            targetElement = filterElements[focusElementIndex + 1];
         } else if (e.key === 'ArrowDown') {
             if (isLastElement) {
                 return;
             }
-            focusDownElement(focusElement);
+            targetElement = focusDownElement(focusElement);
         } else if (e.key === 'ArrowLeft') {
             if (isFirstElement) {
                 return;
             }
-            filterElements[focusElementIndex - 1].focus();
+            targetElement = filterElements[focusElementIndex - 1];
+        }
+        if (targetElement) {
+            targetElement.focus();
+            localSetting.autoSelect && targetElement.click();
         }
     })
 }
@@ -130,11 +134,11 @@ function isUnderFilters(upElement) {
 }
 
 function focusUpElement(element) {
-    focusElement(element, 'up');
+    return focusElement(element, 'up');
 }
 
 function focusDownElement(element) {
-    focusElement(element, 'down');
+    return focusElement(element, 'down');
 }
 
 function focusElement(element, offsetPosition) {
@@ -144,8 +148,9 @@ function focusElement(element, offsetPosition) {
     const y = offsetPosition === 'up' ? (rect.top - OFFSET) : (rect.bottom + OFFSET);
     const upElement = document.elementFromPoint(x, y);
     if (upElement && isUnderFilters(upElement)) {
-        upElement.focus();
+        return upElement;
     }
+    return element;
 }
 
 

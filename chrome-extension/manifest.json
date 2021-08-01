@@ -18,7 +18,6 @@
     "open_in_tab": false
   },
   "permissions": [
-    "debugger",
     "storage"
   ],
   "optional_permissions": [

@@ -41,10 +41,12 @@
         "*://*/browse/*-*"
       ],
       "js": [
+        "lib/toastify.js",
         "storage.js",
         "issue-detail.js"
       ],
       "css": [
+        "lib/toastify.css",
         "filter.css"
       ]
     }

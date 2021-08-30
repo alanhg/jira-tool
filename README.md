@@ -17,7 +17,7 @@
 ## Bundle
 
 ```shell
-shell ./build.sh
+$ ./build.sh
 
 ```
 

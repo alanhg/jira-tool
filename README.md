@@ -23,6 +23,8 @@ $ ./build.sh
 
 ## Install
 
-1. [Chrome webstore](https://chrome.google.com/webstore/detail/jira-tool/bifineglhieejpkhnfnfemcbpadpdooi)
+1. 推荐使用 Chrome 商店安装
+
+    ![[Chrome webstore](https://chrome.google.com/webstore/detail/jira-tool/bifineglhieejpkhnfnfemcbpadpdooi)](https://camo.githubusercontent.com/f25540e08ab08d44f63117f2a30ed36b50ab2e034640cd2d567b31c844b8859b/68747470733a2f2f6a6a6263646e2e7a616f7368752e736f2f7765622f6377735f62616467655f343936783135302e706e67)
 3. Unpacked Install
    ![image](https://user-images.githubusercontent.com/9245110/113583783-a8ea0a00-965c-11eb-95df-cc26cd497e11.png)

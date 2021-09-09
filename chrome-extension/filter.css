@@ -67,5 +67,4 @@ input:checked + .j-slider:before {
 }
 
 .j-not-allowed {
-    cursor: not-allowed !important;
 }
